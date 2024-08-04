@@ -1,5 +1,7 @@
 interface Window {
-  MonacoVim: any; // You can replace `any` with a more specific type if available
+  MonacoVim: any;
 }
+
+import "@code-hike/mdx/dist/index.css"
 
 declare module "monaco-vim";

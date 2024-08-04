@@ -22,12 +22,12 @@ function AdminBar({ code, language }: { code: string; language: string }) {
         {copied ? (
           <div className="flex gap-2 items-center">
             <CheckIcon />
-            Code Copied!
+            复制成功
           </div>
         ) : (
           <div className="flex gap-2 items-center">
             <CopyIcon />
-            Copy
+            复制
           </div>
         )}
       </button>

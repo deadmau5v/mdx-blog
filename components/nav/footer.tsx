@@ -6,18 +6,16 @@ export function Footer() {
       <div className="sm:px-8 px-4 flex flex-col justify-between items-center h-16 space-y-4 sm:space-y-0">
         <div className="flex gap-6 items-center">
           <div className="">
-            &copy; {new Date().getFullYear()}{" "}
-            <span className="font-bold">MDXBlog</span> created by{" "}
-            <Link target="_blank" href="https://owolf.com">
-              OWolf
-            </Link>
+            ©2023 - {new Date().getFullYear()}{" "}
+            <span className="font-bold">
+              <span className="primary-color">Deadmau5v</span>Blog
+            </span>{" "}
           </div>
         </div>
         <nav className="flex gap-4 items-center text-sm">
-          <Link href="/">Home</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/about">About</Link>
-          <Link href="/privacy">Privacy</Link>
+          <Link href="https://beian.miit.gov.cn/#/Integrated/index">
+            湘ICP备2023023816号-1
+          </Link>
         </nav>
       </div>
     </footer>

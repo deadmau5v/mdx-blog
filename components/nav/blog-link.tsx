@@ -9,7 +9,7 @@ function BlogLink() {
 
   return (
     <div className="flex flex-col gap-8 justify-center align-middle items-center">
-      <Link href="/blog">
+      <Link href="/">
         <Button onClick={() => setLoading(true)} className="w-[200px]">
           Start Reading
         </Button>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 function SelectLimitPosts({
@@ -30,8 +30,7 @@ function SelectLimitPosts({
         limit = "10";
       }
     }
-    // console.log("searchParams", searchParams);
-    // console.log("limit", limit);
+
     const limitFromUrl = parseInt(limit as string);
     if (!isNaN(limitFromUrl) && limitFromUrl !== localPostsPerPage) {
       setLocalPostsPerPage(limitFromUrl);
@@ -43,14 +42,14 @@ function SelectLimitPosts({
     if (numBlogs && numBlogs === 0) {
       // alert(`No blogs found ${numBlogs}`);
       router.push(
-        `/blog?limit=${localPostsPerPage}&page=${1}${
+        `/?limit=${localPostsPerPage}&page=${1}${
           searchTerm ? `&search=${searchTerm}` : ""
         }${sort !== "date_desc" ? `&sort=${sort}` : ""}`
       );
     } else {
       // alert(`Blogs found", ${numBlogs}`);
       router.push(
-        `/blog?limit=${localPostsPerPage}&page=${currentPage}${
+        `/?limit=${localPostsPerPage}&page=${currentPage}${
           searchTerm ? `&search=${searchTerm}` : ""
         }${sort !== "date_desc" ? `&sort=${sort}` : ""}`
       );
@@ -67,7 +66,7 @@ function SelectLimitPosts({
   return (
     <div>
       <div className="text-center">
-        <label htmlFor="postsPerPage">Posts per page:</label>
+        <label htmlFor="postsPerPage">每页:</label>
         <select
           id="postsPerPage"
           value={localPostsPerPage}

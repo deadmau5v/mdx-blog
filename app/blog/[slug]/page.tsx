@@ -1,24 +1,12 @@
 import fs from "fs";
 import path from "path";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { MDXRemote } from "next-mdx-remote/rsc"
 import matter from "gray-matter";
-import Button from "@/components/mdx/button";
+import components from "@/components/mdx/options";
 
-//custom components
-import YouTube from "@/components/mdx/youtube";
-import Code from "@/components/mdx/code-component/code";
-import Quiz from "@/components/mdx/quiz";
-import CustomImage from "@/components/mdx/image";
-
-import EditPostButton from "./edit-post-button";
-import OpenInVSCode from "./open-in-vs-code-button";
-
-//examples
-import { CustomButton } from "@/components/examples/custom-button";
 
 //functions
 import { getPost } from "@/lib/posts-utils.mjs";
-import { isDevMode } from "@/lib/utils";
 
 import type { Metadata, ResolvingMetadata } from "next";
 
@@ -36,7 +24,7 @@ export async function generateMetadata(
   const description = post.frontMatter.description;
 
   // Define your base URL (or use an environment variable)
-  const baseURL = "https://mdxblog.io/blog"; // Replace with your actual domain
+  const baseURL = "https://blog.d5v.cc/";
 
   // Construct the full canonical URL
   const canonicalUrl = `${baseURL}/${params.slug}`;
@@ -74,10 +62,7 @@ export async function generateStaticParams() {
       params.push({ slug: filename.replace(".mdx", "") });
     }
 
-    //
   }
-
-  // console.log("params!!!:", params);
 
   return params;
 }
@@ -90,17 +75,6 @@ export default async function BlogPage({
   //
   const props = await getPost(params);
 
-  const slug = params.slug;
-
-  const components = {
-    pre: Code,
-    YouTube,
-    CustomImage,
-    Quiz,
-    CustomButton,
-    Button,
-  };
-
   return (
     <div className="flex flex-col gap-3 sm:w-2xl sm:max-w-2xl max-w-xs">
       <div className="mb-2">
@@ -108,15 +82,12 @@ export default async function BlogPage({
         <div>{props.frontMatter.date}</div>
         <div>By: {props.frontMatter.author}</div>
       </div>
-      {isDevMode() && (
-        <div className="flex gap-2 mb-4">
-          <EditPostButton slug={slug} author={props.frontMatter.author} />
-          <OpenInVSCode path={props.frontMatter.path} />
-        </div>
-      )}
       <div className="flex gap-4"></div>
       <article className="mdx">
-        <MDXRemote source={props.content} components={components} />
+        <MDXRemote
+          source={props.content}
+          components={{ ...components}}
+          />
       </article>
     </div>
   );

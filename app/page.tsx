@@ -1,151 +1,174 @@
-// import LoaderLink from "@/components/nav/custom-link";
-// import AbstractArt from "@/components/graphics/abstract-image";
-// import ReactMarkdown from "react-markdown";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
+import SelectLimitPosts from "./blog/select-limit-posts";
+import SearchPosts from "./blog/search-posts";
+import SortPosts from "./blog/sort-posts";
+import { getPosts } from "@/lib/posts-utils.mjs";
+import BlogPostList from "./blog/blog-post-list";
 
-export default function Home() {
+// interface BlogPost {
+//   slug: string;
+//   type: string;
+//   date: string;
+//   title: string;
+//   description: string;
+//   image: string;
+//   author: string;
+//   tags: string[];
+//   formattedDate?: string;
+// }
+
+// const delay = (ms: any) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const Blog = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
+  const currentPage =
+    typeof searchParams.page === "string" ? Number(searchParams.page) : 1;
+  const postsPerPage =
+    typeof searchParams.limit === "string" ? Number(searchParams.limit) : 10;
+  const searchTerm = searchParams.search || "";
+  const sort = searchParams.sort || "date_desc";
+
+  const { posts: blogs, totalPosts } = getPosts(
+    "",
+    postsPerPage,
+    currentPage,
+    searchTerm,
+    sort as string
+  );
+
+  const totalPages = Math.ceil(totalPosts / postsPerPage);
+
+  //button disabled styles
+  const isPreviousDisabled = currentPage <= 1;
+  const isNextDisabled = currentPage >= totalPages;
+  const disabledLinkStyle = "opacity-50 cursor-not-allowed";
+
+  const isDateDesc = sort === "date_desc";
+
+  // Utility function to trim description
+  function trimDescription(description: string) {
+    const wordLimit = 10;
+    const words = description.split(" ");
+
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(" ") + "...";
+    } else {
+      return description;
+    }
+  }
+
   return (
     <div className="flex flex-col gap-4  max-w-xl">
+      {/* 标题 */}
       <h1 className="text-5xl sm:text-7xl font-bold text-center">
-        Welcome to <span className="primary-color">MDX</span>Blog
+        <span className="inline-block primary-bg text-sm font-semibold px-2 py-1 rounded-full align-text-top mt-5 mr-2">new</span>
+        Welcome to <span className="primary-color">Deadmau5v</span>Blog
       </h1>
+
+      {/* 分割线 */}
+      <hr />
+
+      {/* 公告 */}
       <div className="flex justify-center">
-        <p>A simple static blog template built with Next.js and MDX.</p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-center">
+          旧的博客 <a className="primary-color" href="https://d5v.cc/">https://d5v.cc/</a> 已停止更新
+        </h2>
       </div>
-      <div className="flex justify-center py-3">
-        <Link target="_blank" href="https://github.com/owolfdev/mdx-blog">
-          <Button>
-            <div className="text-lg">
-              Install{" "}
-              <span className="font-bold">
-                <span className="">MDX</span>Blog
+  
+      <h2 className="mt-10 text-2xl sm:text-3xl font-bold text-center">最新文章</h2>
+      <hr className="" />
+
+      <div className="flex flex-col gap-8 pb-6 sm:w-xl max-w-xl sm:max-w-2xl">
+
+        <div className="flex gap-4 justify-between items-center">
+          <SearchPosts
+            currentPage={currentPage}
+            limit={postsPerPage}
+            numBlogs={blogs.length}
+            sort={sort as string}
+          />
+          <SortPosts
+            sort={sort as string}
+            currentPage={currentPage}
+            limit={postsPerPage}
+            searchTerm={searchTerm as string}
+          />
+        </div>
+        <div>
+          {blogs.length === 0 ? (
+            <div className="text-center text-lg flex flex-col justify-evenly ">
+              <span className="pb-[100px] pt-[100px]">
+                此页面未找到博客文章...
               </span>
             </div>
-          </Button>
-        </Link>
-      </div>
-      <p>
-        Click the button above ☝️ to go to the MDXBlog github repo. Installation
-        instructions are in the{" "}
-        <Link
-          target="_blank"
-          href="https://github.com/owolfdev/mdx-blog/blob/main/README.md"
-        >
-          README
-        </Link>{" "}
-        file.
-      </p>
-      <hr />
-      <p>
-        We regularly publish content, including articles, tutorials, and news
-        covering MDX, Next.js, and other static site generation frameworks.
-        Click the button below to start reading 👇.
-      </p>
-      <div className="flex justify-center py-3 pb-6">
-        {" "}
-        <Link className="text-lg" href="/blog">
-          <Button>
-            <span className="text-lg">Start Reading</span>
-          </Button>
-        </Link>
-      </div>
-      <hr />
-      <div className="flex justify-center pt-2">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center">
-          What is <span className="">MDX?</span>
-        </h2>
-      </div>
-      <div className="flex justify-center">
-        <Image
-          src="/logos/mdx-logo.png"
-          alt="MDX Logo"
-          width={150} // Halve the width to 150px
-          height={62}
-        />
-      </div>
-      <div>
-        MDX is a file format that combines Markdown with JSX, allowing
-        developers to seamlessly embed React components within Markdown
-        documents, enabling dynamic and interactive content creation. It
-        facilitates the creation of rich, interactive documentation and blog
-        posts in web development projects. MDX blends Markdown&apos;s
-        straightforward syntax with the capability to embed dynamic JSX
-        elements. Perfect for interactive, rich-content blogs.
-      </div>
-      <div>
-        <ul>
-          <li>
-            <Link target="_blank" href="https://mdxjs.com/">
-              • MDX Official Documentation.
-            </Link>
-          </li>
-          <li>
-            <Link target="_blank" href="https://nextjs.org/docs">
-              • Integrating MDX with Next.js
-            </Link>
-          </li>
-        </ul>
-      </div>
-      <hr />
-      <div className="flex justify-center">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center">
-          More About <span className="primary-color">MDX</span>Blog
-        </h2>
-      </div>
-      <div className="flex flex-col gap-4">
-        <p>
-          <span className="font-bold">MDXBlog</span> is an independently created
-          app built with the latest web technologies, offering a unique blogging
-          experience. <span className="font-bold">MDXBlog</span> offers a
-          simple, yet powerful template for creating static blogs using MDX
-          (Markdown + JSX) and Next.js 14.
-        </p>
+          ) : (
+            <BlogPostList blogs={blogs} trimDescription={trimDescription} />
+          )}
 
-        <p>
-          We have no official affiliation with the MDX team or Next.js, we are
-          simply fans of the technology and wanted to create a simple, free,
-          easy-to-use blog template for the community.
-        </p>
+          <div
+            id="pagination"
+            className="flex gap-2 pt-8 pb-2 items-center justify-center"
+          >
+            {currentPage === 1 ? (
+              <span className={`${disabledLinkStyle}`}>{`<<`}</span>
+            ) : (
+              <span>
+                <Link
+                  href={`/?limit=${postsPerPage}&page=${1}${searchTerm ? `&search=${searchTerm}` : ""
+                    }${!isDateDesc ? `&sort=${sort}` : ""}`}
+                >{`<<`}</Link>
+              </span>
+            )}
+            {isPreviousDisabled ? (
+              <span className={`${disabledLinkStyle}`}>👈</span>
+            ) : (
+              <Link
+                className={``}
+                href={`/?limit=${postsPerPage}&page=${currentPage - 1}${searchTerm ? `&search=${searchTerm}` : ""
+                  }${!isDateDesc ? `&sort=${sort}` : ""}`}
+              >
+                👈
+              </Link>
+            )}
 
-        <p>
-          MDXBlog is a free, open-source project that is easy to install and
-          deploy. It generates static pages that are fast, secure, and
-          SEO-friendly. The app is designed to be easy to use and customize,
-          with a clean, modern design that is fully responsive and
-          mobile-friendly.
-        </p>
-      </div>
+            <span>{`${currentPage}`} - {`${totalPages}`}</span>
 
-      <div>
-        <span className="font-bold">Get MDXBlog</span>: Download the{" "}
-        <Link target="_blank" href="https://github.com/owolfdev/mdx-blog-basic">
-          <span className="font-bold">github repo</span>
-        </Link>
-        . Instructions for installation and deployment are included in the
-        README.
-      </div>
-      <div>
-        <ul>
-          <li>
-            <Link href="/about">• Documentation.</Link>
-          </li>
-          <li>
-            <Link
-              target="_blank"
-              href="https://github.com/owolfdev/mdx-blog-basic"
-            >
-              • MDXBlog GitHub Repo
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog">
-              • The Blog, where you can find the latest news and tutorials.
-            </Link>
-          </li>
-        </ul>
+            {isNextDisabled ? (
+              <span className={`${disabledLinkStyle}`}>👉</span>
+            ) : (
+              <Link
+                className={``}
+                href={`/?limit=${postsPerPage}&page=${currentPage + 1}${searchTerm ? `&search=${searchTerm}` : ""
+                  }${!isDateDesc ? `&sort=${sort}` : ""}`}
+              >
+                👉
+              </Link>
+            )}
+            {currentPage === totalPages ? (
+              <span className={`${disabledLinkStyle}`}>{`>>`}</span>
+            ) : (
+              <span>
+                <Link
+                  href={`/?limit=${postsPerPage}&page=${totalPages}${searchTerm ? `&search=${searchTerm}` : ""
+                    }${!isDateDesc ? `&sort=${sort}` : ""}`}
+                >{`>>`}</Link>
+              </span>
+            )}
+          </div>
+          <SelectLimitPosts
+            postsPerPage={postsPerPage}
+            currentPage={currentPage}
+            searchTerm={searchTerm as string}
+            numBlogs={blogs.length}
+            sort={sort as string}
+          />
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default Blog;

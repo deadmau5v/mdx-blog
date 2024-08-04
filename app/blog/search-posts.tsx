@@ -50,13 +50,13 @@ const SearchPosts = ({
     (searchTerm: string) => {
       if (numBlogs === 0) {
         router.push(
-          `/blog?limit=${limit}&page=${1}${
+          `/?limit=${limit}&page=${1}${
             searchTerm ? `&search=${searchTerm}` : ""
           }${sort !== "date_desc" ? `&sort=${sort}` : ""}`
         );
       } else {
         router.push(
-          `/blog?limit=${limit}&page=${currentPage}${
+          `/?limit=${limit}&page=${currentPage}${
             searchTerm ? `&search=${searchTerm}` : ""
           }${sort !== "date_desc" ? `&sort=${sort}` : ""}`
         );
@@ -95,7 +95,7 @@ const SearchPosts = ({
             ref={inputRef}
             type="text"
             name="searchTerm"
-            placeholder="Search"
+            placeholder="搜索"
             value={inputValue}
             onChange={handleChange}
             className="text-lg sm:text-sm"

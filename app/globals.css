@@ -186,6 +186,12 @@
   color: hsl(var(--primary));
 }
 
+.primary-bg {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+
 .animated-text .letter {
   /* background: linear-gradient(45deg, #0090fd, #fd2060); */
   /* -webkit-background-clip: text; */

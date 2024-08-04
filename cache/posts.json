@@ -1,22 +1,13 @@
 [
   {
-    "slug": "a-first-post",
-    "id": "74a25f0d-a708-47f2-b31f-50c798570cbc",
     "type": "blog",
-    "author": "O Wolfson",
-    "title": "A First Post",
-    "date": "2024-04-18",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-    "categories": [
-      "Web Development"
-    ],
-    "tags": [
-      "react",
-      "javascript",
-      "mdx",
-      "html"
-    ],
-    "image": "/images/default.jpg",
+    
+    "author": "作者",
+    "title": "标题",
+    "date": "日期",
+    "description": "描述",
+    
+    "slug": "a-first-post",
     "path": "a-first-post.mdx"
   }
 ]

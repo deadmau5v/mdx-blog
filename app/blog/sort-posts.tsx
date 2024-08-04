@@ -34,7 +34,7 @@ function SortPosts({
     const theSort = `${sortBy}_${sortOrder}`;
     const isDateDesc = theSort === "date_desc";
     router.push(
-      `/blog?limit=${limit}&page=${currentPage}${
+      `/?limit=${limit}&page=${currentPage}${
         searchTerm ? `&search=${searchTerm}` : ""
       }${!isDateDesc ? `&sort=${theSort}` : ""}`
     );
@@ -84,12 +84,13 @@ function SortPosts({
                 e.preventDefault();
               };
             }}
+            className="bg-[var(--background)]"
           >
             <SelectItem value="date">
-              <span className="sm:text-sm text-lg">Date</span>
+              <span className="sm:text-sm text-lg">日期</span>
             </SelectItem>
             <SelectItem value="title">
-              <span className="sm:text-sm text-lg">Title</span>
+              <span className="sm:text-sm text-lg">标题</span>
             </SelectItem>
           </SelectContent>
         </Select>

@@ -7,7 +7,7 @@ function PushNavigator({ blogs }: { blogs: any[] }) {
 
   useEffect(() => {
     if (blogs.length === 0) {
-      router.push("/blog");
+      router.push("/");
     }
   }, [blogs]);
 

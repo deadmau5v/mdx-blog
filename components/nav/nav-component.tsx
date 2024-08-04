@@ -44,16 +44,16 @@ const NavComponent: React.FC = () => {
       <div className="sm:flex gap-4 items-center hidden">
         <div className="font-bold text-2xl tracking-tight">
           <Link className="pr-2" href="/">
-            <span className="primary-color">MDX</span>
+            <span className="primary-color">Deadmau5v</span>
             <span>Blog</span>
           </Link>
         </div>
         <div className="flex gap-4 font-semibold">
-          <Link className="text-sm" href="/blog">
-            /blog
+          <Link className="text-sm" href="/">
+            首页
           </Link>
           <Link className="text-sm" href="/about">
-            /about
+            关于
           </Link>
         </div>
       </div>
@@ -74,16 +74,10 @@ const NavComponent: React.FC = () => {
         } transition-transform duration-300 ease-in-out flex flex-col gap-6 px-12 py-8 sm:hidden`}
       >
         <Link href="/" onClick={closeMenu}>
-          Home
-        </Link>
-        <Link href="/blog" onClick={closeMenu}>
-          /blog
+          首页
         </Link>
         <Link href="/about" onClick={closeMenu}>
-          /about
-        </Link>
-        <Link href="/contact" onClick={closeMenu}>
-          /contact
+          关于
         </Link>
         {/* Add other mobile navigation links here, each with onClick={closeMenu} */}
       </div>
